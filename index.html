@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ken Jee Hair Salon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<nav><a class="logo" href="#home">KEN JEE</a><button id="menuBtn" aria-label="Menu">☰ Menu</button>
+<div class="links" id="links"><a href="#home">Home</a><a href="#branches">Branches</a><a href="#menu">Menu</a><a href="#promos">Promos</a><a href="#reserve">Reserve</a><a href="#contact">Contact</a><a href="#admin" id="adminLink" class="hide">Admin</a><a href="#" id="authLink" style="color:var(--acc2)">Log in</a></div></nav>
+
+<header class="hero" id="home"><div>
+<div class="eyebrow">Hair Salon · Davao City</div>
+<h1>KEN JEE</h1>
+<p>A calm, beige-toned space for color, keratin, rebonding and scalp care. Choose a branch, pick your time, and we’ll take care of the rest.</p>
+<a class="btn" href="#reserve">Reserve a slot</a> <a class="btn ghost" href="#menu">View menu</a></div></header>
+
+<section id="branches"><div class="sec-t"><h2>Our Branches</h2><p>Two locations in Davao City</p></div>
+<div class="grid">
+<article class="card br"><img src="images/1branch.jpg" alt="Ken Jee first branch"><div class="pad"><span class="tag">1st Branch</span><h3>Coral Building</h3><p>D.3 Coral Bldg., V. Mapa Street, Davao City</p><p>📞 (082) 308-3169</p><span class="badge ok" data-status="1">Open for booking</span></div></article>
+<article class="card br"><img src="images/2branch.jpg" alt="Ken Jee second branch"><div class="pad"><span class="tag">2nd Branch</span><h3>North Zen Hotel Building</h3><p>D.3 North Zen Hotel Bldg., Sobrecary St., Obrero, Davao City</p><p>📞 (082) 315 7398</p><span class="badge ok" data-status="2">Open for booking</span></div></article>
+</div></section>
+
+<section id="menu"><div class="sec-t"><h2>Menu &amp; Price Range</h2><p>Prices in Philippine pesos (₱)</p></div><div class="grid" id="menuGrid"></div></section>
+
+<section id="promos"><div class="sec-t"><h2>Promos &amp; What’s New</h2><p>Latest offers and menu updates</p></div><div id="promoList" class="grid"></div></section>
+
+<section id="reserve"><div class="sec-t"><h2>Reserve a Slot</h2><p>Check the branch status first — fully booked days are marked.</p></div>
+<div style="max-width:620px;margin:auto" class="card"><div class="pad">
+<div id="dbWarn" class="note hide">Accounts and reservations need the page to be opened signed in to Claude. Reload while signed in.</div>
+<form id="resForm">
+<label>Your name<input name="name" required maxlength="60" placeholder="Full name"></label>
+<label>Branch<select name="branch" required><option value="1">1st Branch – Coral Bldg., V. Mapa St.</option><option value="2">2nd Branch – North Zen Hotel Bldg., Obrero</option></select></label>
+<div class="two"><label>Date<input type="date" name="date" required></label><label>Time<input type="time" name="time" required min="09:00" max="20:00"></label></div>
+<label>Service (optional)<input name="service" maxlength="80" placeholder="e.g. Balayage"></label>
+<div id="resMsg" class="note hide"></div>
+<button class="btn" type="submit">Send reservation</button></form></div></div>
+<div style="max-width:620px;margin:26px auto 0"><h3>My reservations</h3><div id="myRes"><p style="color:var(--mute)">Nothing yet.</p></div></div></section>
+
+<section id="admin" class="hide"><div class="sec-t"><h2>Admin Panel</h2><p>Visible only to the page owner and editors</p></div>
+<div class="grid">
+<div class="card"><div class="pad"><h3>Reservations</h3><div id="adminRes"></div></div></div>
+<div><div class="card" style="margin-bottom:24px"><div class="pad"><h3>Overbooking days</h3><p style="color:var(--mute);margin:4px 0 12px">Mark a day as fully booked so clients see it before reserving.</p>
+<form id="obForm"><div class="two"><label>Branch<select name="branch"><option value="1">1st Branch</option><option value="2">2nd Branch</option><option value="all">Both</option></select></label><label>Date<input type="date" name="date" required></label></div><button class="btn" type="submit">Mark fully booked</button></form><div id="obList" style="margin-top:12px"></div></div></div>
+<div class="card"><div class="pad"><h3>Post a promo / update</h3><form id="prForm"><label>Title<input name="title" required maxlength="80"></label><label>Details<textarea name="body" rows="3" required maxlength="400"></textarea></label><label>Type<select name="kind"><option>Promo</option><option>New on menu</option><option>Announcement</option></select></label><button class="btn" type="submit">Post</button></form><div id="prAdmin" style="margin-top:12px"></div></div></div></div>
+</div></section>
+
+<section id="contact" class="contact"><div class="sec-t"><h2>Contact Us</h2></div>
+<div class="grid"><div class="card"><div class="pad"><span class="tag">1st Branch</span><p><a href="tel:0823083169">(082) 308-3169</a></p></div></div>
+<div class="card"><div class="pad"><span class="tag">2nd Branch</span><p><a href="tel:0823157398">(082) 315 7398</a></p></div></div>
+<div class="card"><div class="pad"><span class="tag">Facebook</span><p>KENJEE HAIR SALON</p></div></div></div></section>
+<footer>© Ken Jee Hair Salon · Davao City</footer>
+<div class="ov hide" id="authOv"><div class="card"><div class="tabs"><button id="tLogin" class="on" type="button">Log in</button><button id="tSign" type="button">Sign up</button></div><div class="pad"><form id="authForm">
+<div class="who"><label><input type="radio" name="role" value="client" checked> Client</label><label><input type="radio" name="role" value="admin"> Admin</label></div>
+<label id="fName" class="hide">Full name<input name="fullname" maxlength="60" autocomplete="name"></label>
+<label>Username<input name="username" required maxlength="20" autocomplete="username" placeholder="letters, numbers, _"></label>
+<label>Password<input name="password" type="password" required minlength="6" autocomplete="current-password" placeholder="at least 6 characters"></label>
+<label id="fCode" class="hide">Admin access code<input name="code" type="password" autocomplete="off"></label>
+<div id="authMsg" class="note hide"></div>
+<button class="btn" type="submit" id="authGo">Log in</button><button class="btn ghost" type="button" id="authX" style="color:var(--ink);border-color:var(--line)">Cancel</button></form></div></div></div>
+
+<script src="js/app.js"></script></body></html>
