@@ -38,7 +38,7 @@ function renderRes(){
  $('#myRes').innerHTML=mine.length?mine.map(r=>`<div class="item"><div><b>${fmtD(r.date)} · ${fmtT(r.time)}</b><br><small>${esc(BR[r.branch])}${r.service?' · '+esc(r.service):''}</small>${r.reply?`<br><small>Salon: ${esc(r.reply)}</small>`:''}</div>${bd(r.status)}</div>`).join(''):'<p style="color:var(--mute)">Nothing yet.</p>';
  if(!isAdmin)return;
  const all=[...RES].sort((a,b)=>(a.status=='pending'?0:1)-(b.status=='pending'?0:1)||(a.date+a.time).localeCompare(b.date+b.time));
- $('#adminRes').innerHTML=all.length?all.map(r=>`<div class="item"><div><b>${esc(r.name)}</b> ${bd(r.status)}<br><small>${fmtD(r.date)} · ${fmtT(r.time)} · ${esc(BR[r.branch])}${r.service?' · '+esc(r.service):''}</small></div><div class="acts"><button class="btn sm yes" data-a="accepted" data-id="${r.id}">Accept</button><button class="btn sm no" data-a="declined" data-id="${r.id}">Decline</button></div></div>`).join(''):'<p style="color:var(--mute)">No reservations yet.</p>';
+ $('#adminRes').innerHTML=all.length?all.map(r=>`<div class="item"><div><b>${esc(r.name)}</b> <small>@${esc(r.uid)}</small> ${bd(r.status)}<br><small>${fmtD(r.date)} · ${fmtT(r.time)} · ${esc(BR[r.branch])}${r.service?' · '+esc(r.service):''}</small></div><div class="acts"><button class="btn sm yes" data-a="accepted" data-id="${r.id}">Accept</button><button class="btn sm no" data-a="declined" data-id="${r.id}">Decline</button></div></div>`).join(''):'<p style="color:var(--mute)">No reservations yet.</p>';
  $('#obList').innerHTML=OB.sort((a,b)=>a.date.localeCompare(b.date)).map(o=>`<div class="item"><span>${fmtD(o.date)} · ${o.branch=='all'?'Both branches':BR[o.branch]}</span><button class="btn sm no" data-ob="${o.id}">Remove</button></div>`).join('');
  $('#prAdmin').innerHTML=PR.map(p=>`<div class="item"><span>${esc(p.title)}</span><button class="btn sm no" data-pr="${p.id}">Delete</button></div>`).join('');
 }
@@ -57,16 +57,18 @@ let me=null,mode='login';
 async function hash(p,s){if(!(window.crypto&&crypto.subtle)){let x=5381;for(const c of s+':'+p)x=((x<<5)+x+c.charCodeAt(0))>>>0;return 'x'+x}const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+':'+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function setMe(a){me=a;uid=a?a.username:null;isAdmin=!!a&&a.role=='admin';
  try{a?localStorage.setItem('kj_user',a.username):localStorage.removeItem('kj_user')}catch(e){}
- $('#admin').classList.toggle('hide',!isAdmin);$('#adminLink').classList.toggle('hide',!isAdmin);
+ $('#admin').classList.toggle('hide',!isAdmin);$('#reserve').classList.toggle('hide',isAdmin);document.querySelectorAll('a[href="#reserve"]').forEach(e=>e.classList.toggle('hide',isAdmin));$('#adminLink').classList.toggle('hide',!isAdmin);
  $('#authLink').textContent=a?'Log out ('+a.username+')':'Log in';
  const n=document.querySelector('#resForm [name=name]');if(a&&n&&!n.value)n.value=a.fullname||'';renderRes()}
 async function restore(){let u=null;try{u=localStorage.getItem('kj_user')}catch(e){}if(!u)return;try{const s=await db.collection('accounts').doc(u).get();if(s.exists)setMe({username:u,...s.data()})}catch(e){}}
+function showAuth(on){$('#home').classList.toggle('auth-open',on);if(on)window.scrollTo({top:0,behavior:'smooth'})}
+addEventListener('keydown',e=>{if(e.key=='Escape')showAuth(false)});
 function openAuth(m){mode=m;const F=$('#authForm');$('#tLogin').className=m=='login'?'on':'';$('#tSign').className=m=='sign'?'on':'';
  $('#fName').classList.toggle('hide',m!='sign');F.fullname.required=m=='sign';$('#authGo').textContent=m=='sign'?'Create account':'Log in';
- F.password.autocomplete=m=='sign'?'new-password':'current-password';syncCode();$('#authMsg').className='note hide';$('#authOv').classList.remove('hide')}
+ F.password.autocomplete=m=='sign'?'new-password':'current-password';syncCode();$('#authMsg').className='note hide';showAuth(true)}
 function syncCode(){const a=$('#authForm').role.value=='admin'&&mode=='sign';$('#fCode').classList.toggle('hide',!a)}
 $('#authLink').onclick=e=>{e.preventDefault();$('#links').classList.remove('open');me?setMe(null):openAuth('login')};
-$('#tLogin').onclick=()=>openAuth('login');$('#tSign').onclick=()=>openAuth('sign');$('#authX').onclick=()=>$('#authOv').classList.add('hide');
+$('#tLogin').onclick=()=>openAuth('login');$('#tSign').onclick=()=>openAuth('sign');$('#authX').onclick=()=>showAuth(false);
 $('#authForm').onchange=syncCode;
 $('#authForm').onsubmit=async e=>{e.preventDefault();const F=e.target,m=$('#authMsg'),say=t=>{m.className='note bad';m.textContent=t};
  if(!db)return say('Accounts are unavailable. Open this page signed in to Claude.');
@@ -83,7 +85,7 @@ $('#authForm').onsubmit=async e=>{e.preventDefault();const F=e.target,m=$('#auth
   const d=s.data();if(d.hash!==await hash(pw,d.salt))return say('Incorrect password.');
   if(d.role!==role)return say('This is a '+d.role+' account. Switch the Client/Admin option.');
   setMe({username:un,...d})}
- F.reset();$('#authOv').classList.add('hide');
+ F.reset();showAuth(false);
  if(isAdmin)location.hash='admin'
  }catch(x){say('Something went wrong. Please try again.')}};
 $('#resForm').onsubmit=async e=>{e.preventDefault();const f=e.target,m=$('#resMsg');

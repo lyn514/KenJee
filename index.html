@@ -7,11 +7,18 @@
 <nav><a class="logo" href="#home">KEN JEE</a><button id="menuBtn" aria-label="Menu">☰ Menu</button>
 <div class="links" id="links"><a href="#home">Home</a><a href="#branches">Branches</a><a href="#menu">Menu</a><a href="#promos">Promos</a><a href="#reserve">Reserve</a><a href="#contact">Contact</a><a href="#admin" id="adminLink" class="hide">Admin</a><a href="#" id="authLink" style="color:var(--acc2)">Log in</a></div></nav>
 
-<header class="hero" id="home"><div>
+<header class="hero" id="home"><div class="hero-in"><div class="intro">
 <div class="eyebrow">Hair Salon · Davao City</div>
 <h1>KEN JEE</h1>
 <p>A calm, beige-toned space for color, keratin, rebonding and scalp care. Choose a branch, pick your time, and we’ll take care of the rest.</p>
-<a class="btn" href="#reserve">Reserve a slot</a> <a class="btn ghost" href="#menu">View menu</a></div></header>
+<a class="btn" href="#reserve">Reserve a slot</a> <a class="btn ghost" href="#menu">View menu</a></div><div class="authbox" id="authOv"><div class="card"><div class="tabs"><button id="tLogin" class="on" type="button">Log in</button><button id="tSign" type="button">Sign up</button></div><div class="pad"><form id="authForm">
+<div class="who"><label><input type="radio" name="role" value="client" checked> Client</label><label><input type="radio" name="role" value="admin"> Admin</label></div>
+<label id="fName" class="hide">Full name<input name="fullname" maxlength="60" autocomplete="name"></label>
+<label>Username<input name="username" required maxlength="20" autocomplete="username" placeholder="letters, numbers, _"></label>
+<label>Password<input name="password" type="password" required minlength="6" autocomplete="current-password" placeholder="at least 6 characters"></label>
+<label id="fCode" class="hide">Admin access code<input name="code" type="password" autocomplete="off"></label>
+<div id="authMsg" class="note hide"></div>
+<button class="btn" type="submit" id="authGo">Log in</button><button class="btn ghost" type="button" id="authX" style="color:var(--ink);border-color:var(--line)">Cancel</button></form></div></div></div></div></header>
 
 <section id="branches"><div class="sec-t"><h2>Our Branches</h2><p>Two locations in Davao City</p></div>
 <div class="grid">
@@ -48,13 +55,6 @@
 <div class="card"><div class="pad"><span class="tag">2nd Branch</span><p><a href="tel:0823157398">(082) 315 7398</a></p></div></div>
 <div class="card"><div class="pad"><span class="tag">Facebook</span><p>KENJEE HAIR SALON</p></div></div></div></section>
 <footer>© Ken Jee Hair Salon · Davao City</footer>
-<div class="ov hide" id="authOv"><div class="card"><div class="tabs"><button id="tLogin" class="on" type="button">Log in</button><button id="tSign" type="button">Sign up</button></div><div class="pad"><form id="authForm">
-<div class="who"><label><input type="radio" name="role" value="client" checked> Client</label><label><input type="radio" name="role" value="admin"> Admin</label></div>
-<label id="fName" class="hide">Full name<input name="fullname" maxlength="60" autocomplete="name"></label>
-<label>Username<input name="username" required maxlength="20" autocomplete="username" placeholder="letters, numbers, _"></label>
-<label>Password<input name="password" type="password" required minlength="6" autocomplete="current-password" placeholder="at least 6 characters"></label>
-<label id="fCode" class="hide">Admin access code<input name="code" type="password" autocomplete="off"></label>
-<div id="authMsg" class="note hide"></div>
-<button class="btn" type="submit" id="authGo">Log in</button><button class="btn ghost" type="button" id="authX" style="color:var(--ink);border-color:var(--line)">Cancel</button></form></div></div></div>
+
 
 <script src="js/app.js"></script></body></html>

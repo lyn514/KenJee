@@ -45,7 +45,17 @@ input,select,textarea{font:inherit;padding:11px 13px;border-radius:10px;border:1
 .contact{text-align:center}.contact a{color:var(--acc2)}
 footer{text-align:center;padding:30px 5% 40px;color:var(--mute);font-size:.85rem;border-top:1px solid var(--line)}
 .hide{display:none!important}
-.ov{position:fixed;inset:0;background:rgba(40,32,26,.6);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}
-.ov .card{width:100%;max-width:420px;max-height:92vh;overflow:auto}
 .tabs{display:flex;border-bottom:1px solid var(--line)}.tabs button{flex:1;padding:12px;background:none;border:0;border-bottom:2px solid transparent;color:var(--mute);font:400 .85rem Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.tabs button.on{color:var(--acc2);border-color:var(--acc2)}
 .who{display:grid;grid-template-columns:1fr 1fr;gap:8px}.who label{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:10px;text-transform:none;letter-spacing:0;font-size:.95rem;color:var(--ink)}.who input{width:auto}
+
+.hero-in{width:100%;max-width:1150px;display:flex;align-items:center;justify-content:center;gap:56px}
+.intro{flex:1 1 auto;text-align:center;transition:all .6s ease}
+.intro p{transition:margin .6s}
+.authbox{flex:0 0 auto;width:0;opacity:0;overflow:hidden;transform:translateX(80px);pointer-events:none;transition:width .6s ease,opacity .5s ease .1s,transform .6s ease}
+.authbox .card{width:min(400px,86vw);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.hero.auth-open .intro{text-align:left;flex:1 1 52%}
+.hero.auth-open .intro h1{font-size:clamp(2.4rem,5.5vw,4.4rem)}
+.hero.auth-open .intro p{margin-left:0}
+.hero.auth-open .authbox{width:min(400px,86vw);opacity:1;transform:none;pointer-events:auto;overflow:visible}
+@media(max-width:860px){.hero-in{flex-direction:column;gap:26px}.authbox{width:100%;max-height:0;transform:translateY(30px);display:flex;justify-content:center}.hero.auth-open .authbox{width:100%;max-height:900px}.hero.auth-open .intro{text-align:center;flex:none}.hero.auth-open .intro p{margin-left:auto}.hero.auth-open .intro .eyebrow,.hero.auth-open .intro p,.hero.auth-open .intro .btn{display:none}.hero{min-height:auto;padding:50px 5%}}
+.authbox{text-align:left}.hero.auth-open .intro p{text-shadow:0 1px 10px rgba(0,0,0,.35)}
